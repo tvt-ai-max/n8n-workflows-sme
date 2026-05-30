@@ -1,0 +1,71 @@
+{
+  "name": "Notion CRM Lead Sync - Tôi Là Tùng",
+  "nodes": [
+    {
+      "parameters": {
+        "path": "lead-webhook"
+      },
+      "id": "1",
+      "name": "ManyChat Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [100, 300]
+    },
+    {
+      "parameters": {
+        "databaseId": "cd825dcc81d048c2a4e2c169897d3b03",
+        "properties": {
+          "Name": "={{$json[\"name\"]}}",
+          "Email": "={{$json[\"email\"]}}",
+          "Phone": "={{$json[\"phone\"]}}"
+        }
+      },
+      "id": "2",
+      "name": "Add to Notion CRM",
+      "type": "n8n-nodes-base.notion",
+      "typeVersion": 1,
+      "position": [300, 300]
+    },
+    {
+      "parameters": {
+        "chatId": "709593227",
+        "text": "🔔 Nhận được Lead mới: {{$json[\"name\"]}} ({{$json[\"email\"]}}). Đã đồng bộ về Notion CRM."
+      },
+      "id": "3",
+      "name": "Notify Telegram Bot",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1,
+      "position": [500, 300]
+    }
+  ],
+  "connections": {
+    "ManyChat Webhook": {
+      "main": [
+        [
+          {
+            "node": "Add to Notion CRM",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Add to Notion CRM": {
+      "main": [
+        [
+          {
+            "node": "Notify Telegram Bot",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {},
+  "staticData": null,
+  "meta": {
+    "templateId": "notion-crm-lead-sync"
+  },
+  "tags": []
+}
