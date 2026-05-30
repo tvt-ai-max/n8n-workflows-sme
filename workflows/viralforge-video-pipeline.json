@@ -1,0 +1,45 @@
+{
+  "name": "ViralForge Video Pipeline - Tôi Là Tùng",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "1",
+      "name": "On-Page Trigger",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [250, 300]
+    },
+    {
+      "parameters": {
+        "model": "claude-3-5-sonnet",
+        "prompt": "Viết kịch bản video ngắn dạng thẻ kính cho Tôi Là Tùng..."
+      },
+      "id": "2",
+      "name": "Claude Script Agent",
+      "type": "n8n-nodes-base.openAi",
+      "typeVersion": 1,
+      "position": [450, 300]
+    }
+  ],
+  "connections": {
+    "On-Page Trigger": {
+      "main": [
+        [
+          {
+            "node": "Claude Script Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionTimeout": 3600
+  },
+  "staticData": null,
+  "meta": {
+    "templateId": "viralforge-mvp"
+  },
+  "tags": []
+}
